@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROPOSTA - TROPA DO IRAQUE</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Substituído Black Ops One por Anton para um visual mais urbano e menos militar -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Cores da Bandeira do Iraque
+                        iraque: {
+                            red: '#CE1126',    /* Vermelho da bandeira */
+                            green: '#007A3D',  /* Verde da bandeira */
+                            black: '#000000',  /* Preto */
+                            white: '#FFFFFF',  /* Branco */
+                            dark: '#0a0a0a',   /* Fundo quase preto */
+                        }
+                    },
+                    fontFamily: {
+                        'favela': ['Permanent Marker', 'cursive'],
+                        'impact': ['Anton', 'sans-serif'], /* Fonte alterada aqui */
+                        'bebas': ['Bebas Neue', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505; 
+            color: #e5e5e5;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 100%);
+        }
+        
+        /* Efeito de "Sujeira" ou Textura de Rua no fundo (opcional, via CSS puro) */
+        .bg-texture {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23222222' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Animações */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Linha nas cores da bandeira */
+        .flag-divider {
+            height: 6px;
+            width: 150px;
+            margin: 1.5rem auto;
+            background: linear-gradient(to right, #CE1126 33%, #FFFFFF 33%, #FFFFFF 66%, #000000 66%);
+            border-radius: 4px;
+        }
+        
+        /* Versão menor para subtítulos */
+        .flag-divider-sm {
+            height: 4px;
+            width: 80px;
+            background: linear-gradient(to right, #CE1126 33%, #FFFFFF 33%, #FFFFFF 66%, #000000 66%);
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        /* Navbar Vidro Escuro */
+        .glass-nav {
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #333;
+        }
+
+        /* Iframe com borda RGB estática (cores da bandeira) */
+        .aspect-video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            border-top: 2px solid #CE1126;
+            border-bottom: 2px solid #000000;
+        }
+
+        .aspect-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Overlay Final */
+        #finale-overlay {
+            opacity: 0;
+            pointer-events: none; 
+            transition: opacity 1.5s ease-in-out;
+            background: black;
+        }
+        #finale-overlay.show-finale {
+            opacity: 1;
+        }
+
+        /* Texto com gradiente da bandeira (Opcional para destaque) */
+        .text-iraque-gradient {
+            background: linear-gradient(to right, #CE1126, #e5e5e5, #007A3D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased bg-texture">
+
+    <!-- ========== HEADER (NAVBAR) ========== -->
+    <header class="glass-nav sticky top-0 z-50 w-full">
+        <nav class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <!-- Símbolo simples representando a bandeira -->
+                    <div class="flex flex-col h-8 w-10 border border-gray-600 rounded overflow-hidden opacity-90">
+                        <div class="h-1/3 bg-iraque-red"></div>
+                        <div class="h-1/3 bg-iraque-white flex items-center justify-center">
+                            <span class="text-[8px] text-iraque-green font-bold">★</span>
+                        </div>
+                        <div class="h-1/3 bg-iraque-black"></div>
+                    </div>
+                    <span class="font-impact text-3xl text-white tracking-wider drop-shadow-md">TROPA DO <span class="text-iraque-red">IRAQUE</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="#introducao" class="font-bebas text-xl text-gray-300 hover:text-iraque-red transition-colors duration-200 tracking-wide">A Visão</a>
+                        <a href="#lore" class="font-bebas text-xl text-gray-300 hover:text-iraque-red transition-colors duration-200 tracking-wide">História</a>
+                        <a href="#identidade" class="font-bebas text-xl text-gray-300 hover:text-iraque-red transition-colors duration-200 tracking-wide">Estilo</a>
+                        <a href="#hierarquia" class="font-bebas text-xl text-gray-300 hover:text-iraque-red transition-colors duration-200 tracking-wide">Hierarquia</a>
+                        <a href="#complexo" class="font-bebas text-xl text-gray-300 hover:text-iraque-red transition-colors duration-200 tracking-wide">O Complexo</a>
+                        <a href="#investimentos" class="font-bebas text-xl text-gray-300 hover:text-iraque-red transition-colors duration-200 tracking-wide">Investimento</a>
+                    </div>
+                </div>
+                <!-- Menu Mobile Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none">
+                        <span class="sr-only">Abrir menu</span>
+                        <svg class="block h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Menu Mobile -->
+        <div class="md:hidden hidden bg-black/95 backdrop-blur-xl border-b border-iraque-red" id="mobile-menu">
+            <div class="space-y-1 px-4 pt-4 pb-6">
+                <a href="#introducao" class="font-bebas text-2xl text-gray-300 hover:text-iraque-red block py-2 border-b border-gray-800">A Visão</a>
+                <a href="#lore" class="font-bebas text-2xl text-gray-300 hover:text-iraque-red block py-2 border-b border-gray-800">História</a>
+                <a href="#identidade" class="font-bebas text-2xl text-gray-300 hover:text-iraque-red block py-2 border-b border-gray-800">Estilo</a>
+                <a href="#hierarquia" class="font-bebas text-2xl text-gray-300 hover:text-iraque-red block py-2 border-b border-gray-800">Hierarquia</a>
+                <a href="#complexo" class="font-bebas text-2xl text-gray-300 hover:text-iraque-red block py-2 border-b border-gray-800">O Complexo</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main>
+
+        <!-- ========== HERO SECTION ========== -->
+        <section id="hero" class="relative h-[85vh] min-h-[600px] flex items-center justify-center text-center text-white overflow-hidden">
+            <!-- Imagem de fundo Favela com Bandeira do Iraque -->
+            <img 
+                src="https://r2.fivemanage.com/sbRBLUFtvg4FErAlkNP8E/Designsemnome.png" 
+                alt="Favela do Iraque Background com Bandeira" 
+                class="absolute inset-0 w-full h-full object-cover opacity-40 filter contrast-125 hover:scale-105 transition-transform duration-[10s]"
+                onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/000000/333333?text=Favela+Iraque+FiveM';"
+            >
+            <!-- Overlay Gradiente -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-black/50 to-black/80"></div>
+            
+            <div class="relative z-10 p-4 max-w-6xl pb-16"> <!-- Adicionado pb-16 para dar espaço à seta -->
+                <div class="flex justify-center mb-6">
+                     <!-- Badge "RJ Style" -->
+                    <span class="bg-iraque-red text-white px-4 py-1 font-favela text-lg transform -rotate-2 shadow-lg border border-white/20">
+                        GESTÃO INTELIGENTE - 2025
+                    </span>
+                </div>
+                
+                <!-- Fonte alterada para Anton (via classe font-impact configurada no tailwind.config) -->
+                <h1 class="font-impact text-7xl md:text-[9rem] leading-none text-white drop-shadow-2xl">
+                    <span class="block text-4xl md:text-6xl mb-2 font-bebas text-gray-300">COMPLEXO DO</span>
+                    <span class="text-iraque-gradient">IRAQUE</span>
+                </h1>
+                
+                <p class="mt-8 text-2xl md:text-4xl text-gray-200 font-bebas tracking-wide drop-shadow-md">
+                    <span class="text-iraque-green">DINHEIRO</span> NO BOLSO • <span class="text-iraque-red">INIMIGO</span> NO CHÃO • <span class="text-white">FAVELA</span> NO TOPO
+                </p>
+
+                <!-- Scroll Down Indicator Ajustado: bottom-4 para descer mais e não ficar no texto -->
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce">
+                    <svg class="w-8 h-8 text-iraque-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Container principal -->
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+            
+            <!-- ========== 2. INTRODUÇÃO ========== -->
+            <section id="introducao" class="fade-in-section text-center">
+                <h2 class="font-impact text-5xl md:text-6xl text-white">VISÃO DA TROPA</h2>
+                <div class="flag-divider"></div>
+                <p class="mt-6 text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
+                    Nós somos o <strong>crime organizado do Rio de Janeiro</strong>. O projeto "Tropa do Iraque" traz a vivência real de favela: a cultura do baile, o fluxo nas vielas, a lealdade entre os crias e o terror para os alemão. Nosso foco é dominar o tráfico com inteligência e defender o morro na bala.
+                </p>
+                
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-gray-900/80 p-6 border-b-4 border-iraque-red hover:bg-gray-800 transition duration-300 group">
+                        <h3 class="font-bebas text-3xl text-white group-hover:text-iraque-red transition">OUSADIA</h3>
+                        <p class="text-gray-400 mt-2 font-favela text-sm">"Nós não pede licença, nós invade."</p>
+                        <p class="text-gray-500 mt-2 text-sm">Domínio agressivo de território e pichação na cara da polícia.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-gray-900/80 p-6 border-b-4 border-white hover:bg-gray-800 transition duration-300 group">
+                        <h3 class="font-bebas text-3xl text-white group-hover:text-gray-300 transition">GESTÃO</h3>
+                        <p class="text-gray-400 mt-2 font-favela text-sm">"Lucro gera poder."</p>
+                        <p class="text-gray-500 mt-2 text-sm">Controle total das bocas de fumo e lavagem de dinheiro em comércios.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-gray-900/80 p-6 border-b-4 border-iraque-green hover:bg-gray-800 transition duration-300 group">
+                        <h3 class="font-bebas text-3xl text-white group-hover:text-iraque-green transition">CONEXÃO</h3>
+                        <p class="text-gray-400 mt-2 font-favela text-sm">"Favela vive."</p>
+                        <p class="text-gray-500 mt-2 text-sm">Bailes funk, eventos pra comunidade e proteção aos moradores.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== 3. LORE E HISTÓRIA ========== -->
+            <section id="lore" class="fade-in-section mt-32">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2">
+                        <h2 class="font-impact text-5xl text-white mb-2">A HISTÓRIA</h2>
+                        <h3 class="font-favela text-2xl text-iraque-red mb-6">A UNIÃO FAZ A FORÇA</h3>
+                        <div class="flag-divider-sm"></div>
+                        
+                        <div class="space-y-6 text-gray-300 leading-relaxed mt-4">
+                            <p>
+                                <strong class="text-white">A Fundação no Cárcere:</strong> A Tropa do Iraque nasceu da opressão. No sistema prisional, onde o Estado falha, nós nos organizamos. Crias de diferentes favelas, cansados da guerra entre si e do abuso do sistema, selaram um pacto de sangue. A união foi forjada na dor e na necessidade de sobrevivência.
+                            </p>
+                            <p>
+                                <strong class="text-white">A Doutrina:</strong> Inspirados na resistência e na organização, criamos nosso próprio código de conduta. "Paz, Justiça e Liberdade" não é só um lema, é a lei. O "Iraque" simboliza nossa terra prometida, um território onde nós ditamos as regras e onde a comunidade é protegida contra qualquer ameaça externa.
+                            </p>
+                            <p>
+                                <strong class="text-white">A Expansão pra Pista:</strong> Com a liberdade dos fundadores, a ideologia ganhou as ruas. Escolhemos a Cidade dos Anjos para erguer nossa bandeira. Nosso objetivo é claro: unificar o crime sob uma gestão inteligente, acabar com as guerras sem sentido e focar no que importa: o progresso da nossa gente e o domínio total do território. O Complexo do Iraque será o nosso quartel-general.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 relative">
+                        <!-- Moldura Estilizada -->
+                        <div class="absolute -inset-4 border-2 border-iraque-red opacity-30 transform rotate-2"></div>
+                        <div class="absolute -inset-4 border-2 border-iraque-green opacity-30 transform -rotate-2"></div>
+                        
+                        <img 
+                            src="https://i.ytimg.com/vi/ZooZAnoHBgo/maxresdefault.jpg" 
+                            alt="Mesa de Drogas FiveM" 
+                            class="relative rounded shadow-2xl w-full h-auto grayscale hover:grayscale-0 transition duration-700"
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== 4. OBJETIVOS ========== -->
+            <section id="objetivos" class="fade-in-section mt-32">
+                <h2 class="font-impact text-5xl text-white text-center">CORRE DO DIA A DIA</h2>
+                <div class="flag-divider"></div>
+
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-800">
+                    <!-- Lado Crime -->
+                    <div class="p-10 bg-gradient-to-br from-gray-900 to-black hover:from-black hover:to-gray-900 transition border-r border-gray-800">
+                        <div class="flex items-center mb-6">
+                            <span class="text-5xl mr-4">💣</span>
+                            <div>
+                                <h3 class="font-bebas text-4xl text-iraque-red">O CRIME (FRENTE)</h3>
+                                <p class="text-gray-500 font-mono text-sm">ATIVIDADE ILEGAL</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 text-gray-400">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-iraque-red rounded-full mr-3"></span>Venda de Drogas.</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-iraque-red rounded-full mr-3"></span>Tráfico de Armas e Munições.</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-iraque-red rounded-full mr-3"></span>Invasão de territórios rivais.</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-iraque-red rounded-full mr-3"></span>Briga contra a Policia.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Lado Favela -->
+                    <div class="p-10 bg-gradient-to-bl from-gray-900 to-black hover:from-black hover:to-gray-900 transition">
+                        <div class="flex items-center mb-6">
+                            <span class="text-5xl mr-4">🎉</span>
+                            <div>
+                                <h3 class="font-bebas text-4xl text-iraque-green">COMPLEXO DO IRAQUE</h3>
+                                <p class="text-gray-500 font-mono text-sm">CULTURA E COMUNIDADE</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 text-gray-400">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-iraque-green rounded-full mr-3"></span>BAILE DO IRAQUE (o maior da cidade).</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-iraque-green rounded-full mr-3"></span>Encontro de motos e grau.</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-iraque-green rounded-full mr-3"></span>Bar da Laje (fachada).</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-iraque-green rounded-full mr-3"></span>Campeonatos de Pipa e Futebol.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========== 5. IDENTIDADE VISUAL ========== -->
+            <section id="identidade" class="fade-in-section mt-32">
+                <div class="bg-gray-900 rounded-xl overflow-hidden shadow-2xl border border-gray-800">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <div class="p-10 flex flex-col justify-center">
+                            <h2 class="font-impact text-5xl text-white mb-4">TRAJE DE PISTA</h2>
+                            <p class="text-gray-400 text-lg mb-8">
+                                Aqui não tem farda. Aqui tem estilo. Nossa identidade visual mistura o estilo <span class="text-white font-bold">Mandrake</span> com as cores da nossa bandeira.
+                            </p>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h4 class="font-bebas text-2xl text-iraque-white mb-2 border-b border-gray-700 inline-block">KIT MANDRAKE</h4>
+                                    <p class="text-gray-500">Camisa de time (Flamengo, Brasil, Times Europeus - Preferência Vermelho/Preto/Verde), Bermuda Calça Camuflada (Camuflado Roxo/ Camuflado Vermelho).</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bebas text-2xl text-iraque-white mb-2 border-b border-gray-700 inline-block">ACESSÓRIOS</h4>
+                                    <p class="text-gray-500">Óculos Oakley (Juliet, Penny), Correntes de Ouro/Prata grossas, Boné de lado, Cabelo na régua (Nevou ou Disfarçado).</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bebas text-2xl text-iraque-white mb-2 border-b border-gray-700 inline-block">GUERRA</h4>
+                                    <p class="text-gray-500">Colete tático aparente (Preto ou Verde), Máscara de caveira ou Balaclava, Fuzil MK2 nas costas.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Visual Image Grid -->
+                        <div class="relative h-96 lg:h-auto bg-black">
+                            <img 
+                                src="https://r2.fivemanage.com/sbRBLUFtvg4FErAlkNP8E/Gemini_Generated_Image_9v7zvb9v7zvb9v7z-Editado.png" 
+                                alt="Estilo Mandrake RJ" 
+                                class="absolute inset-0 w-full h-full object-cover opacity-60 hover:opacity-100 transition duration-500"
+                                onerror="this.onerror=null; this.src='https://placehold.co/600x800/111111/444444?text=Estilo+Mandrake';"
+                            >
+                            <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
+                                <p class="text-white font-favela text-xl text-center">"O BRILHO DO OURO, O PESO DO CHUMBO"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== 6. HIERARQUIA ========== -->
+            <section id="hierarquia" class="fade-in-section mt-32">
+                <h2 class="font-impact text-5xl text-white text-center">HIERARQUIA DO CRIME</h2>
+                <div class="flag-divider"></div>
+                <p class="mt-4 text-gray-400 text-center mb-12">Sem continência. Aqui o respeito se conquista na atitude.</p>
+                
+                <!-- Grade de Liderança -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    
+                    <!-- DONO -->
+                    <div class="bg-gradient-to-b from-iraque-red/20 to-black border border-iraque-red/50 p-6 rounded-lg text-center transform hover:scale-105 transition duration-300">
+                        <span class="text-4xl">👑</span>
+                        <h3 class="font-impact text-2xl text-white mt-4">DONO</h3>
+                        <p class="text-iraque-red font-bebas tracking-wider text-xl mt-1">DEREK NIKOLAEV</p>
+                        <p class="text-gray-500 text-xs mt-3">A MENTE MESTRA</p>
+                    </div>
+
+                    <!-- FRENTE -->
+                    <div class="bg-gradient-to-b from-white/10 to-black border border-white/30 p-6 rounded-lg text-center transform hover:scale-105 transition duration-300">
+                        <span class="text-4xl">🦍</span>
+                        <h3 class="font-impact text-2xl text-white mt-4">FRENTE</h3>
+                        <p class="text-gray-300 font-bebas tracking-wider text-xl mt-1">APOLO ALDRIN</p>
+                        <p class="text-gray-500 text-xs mt-3">GERENTE GERAL</p>
+                    </div>
+
+                    <!-- GERENTES -->
+                    <div class="bg-gradient-to-b from-iraque-green/20 to-black border border-iraque-green/50 p-6 rounded-lg text-center transform hover:scale-105 transition duration-300">
+                        <span class="text-4xl">🔫</span>
+                        <h3 class="font-impact text-2xl text-white mt-4">GERENTES</h3>
+                        <p class="text-iraque-green font-bebas tracking-wider text-xl mt-1">TONY PIERRE</p>
+                        <p class="text-gray-500 text-xs mt-3">BOCA & GUERRA</p>
+                    </div>
+
+                </div>
+
+                <!-- Listas de Vagas -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                     <!-- Coluna Vapores (Dividida em 2 visualmente se necessário, mas aqui faremos uma lista longa com scroll ou grid) -->
+                    <div class="md:col-span-2 bg-gray-900/40 p-6 rounded border border-gray-800">
+                        <h4 class="font-bebas text-2xl text-white mb-4 flex items-center gap-2">
+                            <span class="text-iraque-red">■</span> VAPOR
+                        </h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-gray-400 font-mono">
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">01. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">02. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">03. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">04. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">05. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">06. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">07. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">08. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">09. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">10. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">11. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">12. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">13. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">14. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">15. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">16. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">17. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">18. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">19. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">20. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">21. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">22. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">23. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">24. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">25. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">26. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">27. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">28. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">29. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">30. VAGO</div>
+                        </div>
+                    </div>
+
+                    <!-- Coluna Soldados -->
+                    <div class="bg-gray-900/40 p-6 rounded border border-gray-800">
+                        <h4 class="font-bebas text-2xl text-white mb-4 flex items-center gap-2">
+                            <span class="text-iraque-green">■</span> SOLDADOS
+                        </h4>
+                        <div class="grid grid-cols-1 gap-2 text-xs text-gray-400 font-mono">
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">01. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">02. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">03. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">04. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">05. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">06. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">07. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">08. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">09. VAGO</div>
+                            <div class="bg-black/50 p-2 rounded border border-gray-800">10. VAGO</div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ========== 7. COMPLEXO (MLO) ========== -->
+            <section id="complexo" class="fade-in-section mt-32">
+                <div class="bg-black border border-gray-800 p-8 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-iraque-red blur-[80px] opacity-20"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-iraque-green blur-[80px] opacity-20"></div>
+
+                    <h2 class="font-impact text-5xl text-white text-center relative z-10">O COMPLEXO DO IRAQUE</h2>
+                    <div class="flag-divider relative z-10"></div>
+                    <p class="text-gray-400 text-center max-w-2xl mx-auto mb-10 relative z-10">
+                        Precisamos de um território que reflita nossa história: vielas apertadas para emboscadas, lajes para soltar pipa e vigiar a entrada, fiação exposta e a arte da favela nos muros. Um lugar onde o Estado não entra e o Iraque prevalece.
+                    </p>
+                    
+                    <div class="mb-8 p-4 bg-iraque-green/10 border border-iraque-green/50 rounded-lg text-center relative z-10">
+                        <p class="text-sm text-iraque-white font-bold">⚠ AVISO IMPORTANTE ⚠</p>
+                        <p class="text-xs text-gray-400 mt-1">
+                            O mapa (MLO) escolhido será <strong>doado integralmente</strong> para a cidade, sem reembolso. Além disso, nos comprometemos a customizar o mapa conforme as necessidades e regras da staff.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                        <!-- Opção 1 -->
+                        <div>
+                            <div class="aspect-video-container mb-4">
+                                <iframe src="https://www.youtube.com/embed/qGWzjmFh-F4" title="MLO Complexo da Maré" allowfullscreen></iframe>
+                            </div>
+                            <h4 class="font-bebas text-2xl text-white">OPÇÃO 1: COMPLEXO DA MARÉ</h4>
+                            <p class="text-sm text-gray-500">Densidade urbana extrema, ideal para RP de guerrilha.</p>
+                        </div>
+                        <!-- Opção 2 -->
+                        <div>
+                            <div class="aspect-video-container mb-4">
+                                <iframe src="https://www.youtube.com/embed/ZvBee942PXo" title="MLO Morro do Chapadão" allowfullscreen></iframe>
+                            </div>
+                            <h4 class="font-bebas text-2xl text-white">OPÇÃO 2: MORRO DO CHAPADÃO</h4>
+                            <p class="text-sm text-gray-500">Verticalidade e domínio de terreno elevado.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <!-- ========== INVESTIMENTOS ========== -->
+             <section id="investimentos" class="fade-in-section mt-32 mb-16">
+                <h2 class="font-impact text-5xl text-white text-center">INVESTIMENTO PESADO</h2>
+                <div class="flag-divider"></div>
+
+                 <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                     <!-- Item 1 -->
+                     <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center hover:border-iraque-red transition flex flex-col items-center">
+                         <div class="text-4xl mb-4">👕</div>
+                         <h4 class="font-bebas text-xl text-white">PACK DE ROUPAS</h4>
+                         <p class="text-gray-500 text-xs mt-2">Camisas de time exclusivas com a logo do Iraque nas costas.</p>
+                     </div>
+                     <!-- Item 2 -->
+                     <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center hover:border-iraque-white transition flex flex-col items-center">
+                         <div class="text-4xl mb-4">🔫</div>
+                         <h4 class="font-bebas text-xl text-white">SKIN DE FUZIL</h4>
+                         <p class="text-gray-500 text-xs mt-2">Pintura customizada nas cores da bandeira para o MK2.</p>
+                     </div>
+                     <!-- Item 3 -->
+                     <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center hover:border-iraque-green transition flex flex-col items-center">
+                         <div class="text-4xl mb-4">🏍️</div>
+                         <h4 class="font-bebas text-xl text-white">FROTA DE MOTOS</h4>
+                         <p class="text-gray-500 text-xs mt-2">XT 660 e Tiger 800 tunadas para fuga.</p>
+                     </div>
+                     <!-- Item 4 -->
+                     <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center hover:border-gray-500 transition flex flex-col items-center">
+                         <div class="text-4xl mb-4">🎨</div>
+                         <h4 class="font-bebas text-xl text-white">CUSTOMIZAÇÃO DA FAVELA</h4>
+                         <p class="text-gray-500 text-xs mt-2">Alteração de texturas e graffitis para identidade do Iraque.</p>
+                     </div>
+                     <!-- Item 5 (Novo) -->
+                     <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center hover:border-iraque-red transition flex flex-col items-center">
+                         <div class="text-4xl mb-4">🎬</div>
+                         <h4 class="font-bebas text-xl text-white">CINEMATIC DE APRESENTAÇÃO</h4>
+                         <p class="text-gray-500 text-xs mt-2">Vídeo de alta produção para introduzir a facção.</p>
+                     </div>
+                     <!-- Item 6 (Novo) -->
+                     <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center hover:border-iraque-white transition flex flex-col items-center">
+                         <div class="text-4xl mb-4">📜</div>
+                         <h4 class="font-bebas text-xl text-white">CINEMATIC DA LORE</h4>
+                         <p class="text-gray-500 text-xs mt-2">Vídeo contando a história da fundação e união.</p>
+                     </div>
+                     <!-- Item 7 (Novo) -->
+                     <div class="md:col-span-2 bg-gray-900 border border-gray-800 p-6 rounded-xl text-center hover:border-iraque-green transition flex flex-col items-center">
+                         <div class="text-4xl mb-4">🎙️</div>
+                         <h4 class="font-bebas text-xl text-white">NARRAÇÃO PROFISSIONAL (TAYRK)</h4>
+                         <p class="text-gray-500 text-xs mt-2">Contratação do renomado Tayrk para narrar os vídeos, elevando o nível de imersão e qualidade audiovisual.</p>
+                     </div>
+                 </div>
+            </section>
+            
+            <!-- ========== CONCLUSÃO ========== -->
+            <section class="fade-in-section text-center py-20 bg-gradient-to-t from-iraque-red/10 to-transparent">
+                <h2 class="font-favela text-4xl md:text-6xl text-white mb-6">"PAZ, JUSTIÇA E LIBERDADE"</h2>
+                <p class="text-gray-400 font-bebas text-xl tracking-widest">TROPA DO IRAQUE • CIDADE DOS ANJOS • 2025</p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ========== OVERLAY FINAL ========== -->
+    <div id="finale-overlay" class="fixed inset-0 flex items-center justify-center text-center p-4 z-[100] bg-black">
+        <div class="relative">
+            <!-- Efeito de Luz de Fundo -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-iraque-red rounded-full blur-[150px] opacity-30"></div>
+            
+            <h2 class="font-impact text-7xl sm:text-9xl text-white mb-2 tracking-tighter relative z-10">IRAQUE</h2>
+            <div class="h-2 w-full bg-gradient-to-r from-iraque-red via-white to-iraque-black mb-4"></div>
+            <p class="text-iraque-green font-favela text-3xl relative z-10">O IMPÉRIO TÁ FORMADO</p>
+        </div>
+    </div>
+
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-black border-t border-gray-900 mt-0">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-600 font-mono text-xs">&copy; 2025 TROPA DO IRAQUE.</p>
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <div class="w-4 h-4 rounded-full bg-iraque-red"></div>
+                <div class="w-4 h-4 rounded-full bg-iraque-white"></div>
+                <div class="w-4 h-4 rounded-full bg-iraque-black"></div>
+                <div class="w-4 h-4 rounded-full bg-iraque-green"></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPT ========== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Animação de Scroll ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const finaleOverlay = document.getElementById('finale-overlay');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- Menu Mobile ---
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = menuButton.querySelector('svg:first-child');
+            const closeIcon = menuButton.querySelector('svg:last-child');
+            
+            menuButton.addEventListener('click', () => {
+                const isMenuOpen = mobileMenu.classList.toggle('hidden');
+                openIcon.classList.toggle('hidden', !isMenuOpen);
+                closeIcon.classList.toggle('hidden', isMenuOpen);
+            });
+
+            // --- Efeito Final ---
+            window.addEventListener('scroll', () => {
+                const nearBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 50); 
+                if (nearBottom) {
+                    finaleOverlay.classList.add('show-finale');
+                } else {
+                    finaleOverlay.classList.remove('show-finale');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
